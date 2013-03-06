@@ -27,11 +27,11 @@ class ConnectionStub(object):
         self._db.opened += 1
         self._verbose = verbose
         if self._verbose:
-            print 'Connection opened'
+            print('Connection opened')
     def close(self):
         self._db.closed += 1
         if self._verbose:
-            print 'Connection closed'
+            print('Connection closed')
     def __repr__(self):
         return '<ConnectionStub>'
 
@@ -58,12 +58,12 @@ class DataManagerStub(object):
     def __init__(self):
         self.log = []
     def abort(self, t):
-        print 'aborted'
+        print('aborted')
         self.log.append('aborted')
     def tpc_begin(self, t):
         pass
     def commit(self, t):
-        print 'committed'
+        print('committed')
         self.log.append('committed')
     def tpc_vote(self, t):
         pass
@@ -74,14 +74,14 @@ class DataManagerStub(object):
 def doctest_ZopeInteraction():
     """Test for ZopeInteraction
 
-        >>> print queryInteraction()
+        >>> print(queryInteraction())
         None
 
         >>> with contextmanagers.ZopeInteraction():
-        ...     print queryInteraction().__class__.__name__
+        ...     print(queryInteraction().__class__.__name__)
         ParanoidSecurityPolicy
 
-        >>> print queryInteraction()
+        >>> print(queryInteraction())
         None
 
     """
@@ -91,7 +91,7 @@ def doctest_ZodbConnection():
     """Test the ZodbConnection context manager.
 
         >>> with contextmanagers.ZodbConnection(DbStub(verbose=True)) as conn:
-        ...     print conn
+        ...     print(conn)
         Connection opened
         <ConnectionStub>
         Connection closed
@@ -120,21 +120,21 @@ def doctest_ZopeSite():
 
     Initially there's no site
 
-        >>> print hooks.getSite()
+        >>> print(hooks.getSite())
         None
 
     It is set inside the context manager
 
         >>> site = SiteStub()
         >>> with contextmanagers.ZopeSite(site) as s:
-        ...     print hooks.getSite() is site
-        ...     print s is site
+        ...     print(hooks.getSite() is site)
+        ...     print(s is site)
         True
         True
 
     and cleared when you're done
 
-        >>> print hooks.getSite()
+        >>> print(hooks.getSite())
         None
 
     """
@@ -146,10 +146,10 @@ def doctest_ZopeSite_can_be_nested():
     ZopeSite() can be nested
 
         >>> with contextmanagers.ZopeSite(SiteStub('outer')):
-        ...     print hooks.getSite()
+        ...     print(hooks.getSite())
         ...     with contextmanagers.ZopeSite(SiteStub('inner')):
-        ...         print hooks.getSite()
-        ...     print hooks.getSite()
+        ...         print(hooks.getSite())
+        ...     print(hooks.getSite())
         SiteStub('outer')
         SiteStub('inner')
         SiteStub('outer')
@@ -169,7 +169,7 @@ def doctest_ZopeSite_handles_exceptions():
           ...
         Exception
 
-        >>> print hooks.getSite()
+        >>> print(hooks.getSite())
         None
 
     """
@@ -179,7 +179,7 @@ def doctest_ZopeTransaction():
     """Test the ZopeTransaction context manager.
 
         >>> with contextmanagers.ZopeTransaction() as t:
-        ...     print t is transaction.get()
+        ...     print(t is transaction.get())
         True
 
     """
@@ -189,7 +189,7 @@ def doctest_ZopeTransaction_with_user():
     """Test the ZopeTransaction context manager.
 
         >>> with contextmanagers.ZopeTransaction(user='admin') as t:
-        ...     print repr(t.user)
+        ...     print(repr(t.user))
         '/ admin'
 
     """
@@ -199,7 +199,7 @@ def doctest_ZopeTransaction_with_note():
     """Test the ZopeTransaction context manager.
 
         >>> with contextmanagers.ZopeTransaction(note='doing stuff') as t:
-        ...     print repr(t.description)
+        ...     print(repr(t.description))
         'doing stuff'
 
     """
@@ -209,7 +209,7 @@ def doctest_ZopeTransaction_with_path():
     """Test the ZopeTransaction context manager.
 
         >>> with contextmanagers.ZopeTransaction(user='bob', path='/url') as t:
-        ...     print repr(t.user)
+        ...     print(repr(t.user))
         '/url bob'
 
     """
@@ -220,7 +220,7 @@ def doctest_ZopeTransaction_commits_on_success():
 
         >>> with contextmanagers.ZopeTransaction() as t:
         ...     t.join(DataManagerStub())
-        ...     print 'okay, time to commit'
+        ...     print('okay, time to commit')
         okay, time to commit
         committed
 
@@ -249,7 +249,7 @@ def doctest_ZopeTransaction_starts_new_transaction():
 
         >>> transaction.get().join(DataManagerStub())
         >>> with contextmanagers.ZopeTransaction() as t:
-        ...     print 'inside new transaction'
+        ...     print('inside new transaction')
         aborted
         inside new transaction
 

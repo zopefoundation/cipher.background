@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-
+from __future__ import print_function
 import doctest
 
 import transaction
@@ -159,7 +159,7 @@ def doctest_BackgroundWorkerThread_run():
 
         >>> thread.run()
 
-        >>> print logbuf.getvalue().strip() # doctest: +ELLIPSIS
+        >>> print(logbuf.getvalue().strip()) # doctest: +ELLIPSIS
         scheduling a task
         got interaction: True
         got site: True
@@ -202,7 +202,7 @@ def doctest_BackgroundWorkerThread_run_exception_handling():
 
     The exception is mentioned in the log
 
-        >>> print logbuf.getvalue().strip() # doctest: +ELLIPSIS
+        >>> print(logbuf.getvalue().strip()) # doctest: +ELLIPSIS
         scheduling a task
         Exception in this thread
         Traceback (most recent call last):
@@ -247,7 +247,7 @@ def doctest_BackgroundWorkerThread_run_outer_exception_handling():
 
     The exception is mentioned in the log and the thread is terminated
 
-        >>> print logbuf.getvalue().strip() # doctest: +ELLIPSIS
+        >>> print(logbuf.getvalue().strip()) # doctest: +ELLIPSIS
         scheduling a task
         Exception in this thread, thread terminated
         Traceback (most recent call last):
